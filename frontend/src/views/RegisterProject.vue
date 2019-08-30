@@ -1,13 +1,4 @@
 <template>
-    <div>
-        <h1>Hi {{account.user.firstName}}!</h1>
-        <p>
-            <router-link to="/login">Logout</router-link>
-        </p>
-    </div>
-
-
-
     <form class="form-horizontal">
         <fieldset>
             <!-- Form Name -->
@@ -17,7 +8,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label">Team and Repository Name</label>
                 <div class="col-md-4">
-                    <input v-model="repoName" type="text" placeholder="Team and Repository Name" class="form-control input-md" required="">
+                    <input v-model="repository.repoName" type="text" placeholder="Team and Repository Name" class="form-control input-md" required="">
                 </div>
             </div>
 
@@ -25,7 +16,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label">Description</label>
                 <div class="col-md-4">
-                    <textarea v-model="description" class="form-control">Say somethong about your project</textarea>
+                    <textarea v-model="repository.description" class="form-control">Say somethong about your project</textarea>
                 </div>
             </div>
 
@@ -33,7 +24,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label">You</label>
                 <div class="col-md-4">
-                    <input v-model="creator" type="text" placeholder="Your GitHub Name" class="form-control input-md" required="">
+                    <input v-model="repository.creator" type="text" placeholder="Your GitHub Name" class="form-control input-md" required="">
                 </div>
             </div>
 
@@ -41,7 +32,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label">Teammate 1</label>
                 <div class="col-md-4">
-                    <input v-model="teammateOne" type="text" placeholder="GitHub Name" class="form-control input-md">
+                    <input v-model="repository.teammateOne" type="text" placeholder="GitHub Name" class="form-control input-md">
                 </div>
             </div>
 
@@ -49,7 +40,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label">Teammate 2</label>
                 <div class="col-md-4">
-                    <input v-model="teammateTwo" type="text" placeholder="GitHub Name" class="form-control input-md">
+                    <input v-model="repository.teammateTwo" type="text" placeholder="GitHub Name" class="form-control input-md">
                 </div>
             </div>
 
@@ -57,7 +48,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label">Teammate 3</label>
                 <div class="col-md-4">
-                    <input v-model="teammateThree" type="text" placeholder="GitHub Name" class="form-control input-md">
+                    <input v-model="repository.teammateThree" type="text" placeholder="GitHub Name" class="form-control input-md">
                 </div>
             </div>
 
@@ -65,7 +56,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label">Teammate 4</label>
                 <div class="col-md-4">
-                    <input v-model="teammateFour" type="text" placeholder="GitHub Name" class="form-control input-md">
+                    <input v-model="repository.teammateFour" type="text" placeholder="GitHub Name" class="form-control input-md">
                 </div>
             </div>
 
@@ -89,41 +80,36 @@
         name: 'RegisterProject',
         data() {
             return {
-                repoName: '',
-                creator: '',
-                teammateOne: '',
-                teammateTwo: '',
-                teammateThree: '',
-                teammateFour: '',
-                description: ''
+                repository: {
+                    repoName: '',
+                    creator: '',
+                    teammateOne: '',
+                    teammateTwo: '',
+                    teammateThree: '',
+                    teammateFour: '',
+                    description: ''
+                }
             };
         },
         methods: {
+            ...mapActions('repository', ['createRepository']),
             confirm() {
-                // TODO call backend and create repo from template
+                if (this.account.user != null) {
+                    this.createRepository(this.repository);
+                }
             },
             cancel() {
-                this.repoName = '';
-                this.creator = '';
-                this.teammateOne = '';
-                this.teammateTwo = '';
-                this.teammateThree = '';
-                this.teammateFour = '';
-                this.description = '';
+                this.repository = undefined;
             },
-            ...mapActions('users', {
-                getAllUsers: 'getAll',
-                deleteUser: 'delete'
+            ...mapActions('repo', {
+                createRepository: 'createRepository'
             },)
         },
         computed: {
             ...mapState({
-                account: (state) => state.account,
-                users: (state) => state.users.all
+                account: state => state.account,
+                repo: state => state.repository
             })
-        },
-        created() {
-            this.getAllUsers();
         }
     };
 </script>

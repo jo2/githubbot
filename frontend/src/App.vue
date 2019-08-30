@@ -1,18 +1,29 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+
+      <div class="collapse navbar-collapse container" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/login">Login</router-link>
+          <li v-if="account.user != null">
+            <router-link class="nav-link" to="/registerProject">Create Project</router-link>
           </li>
+        </ul>
+        <ul class="navbar-nav my-2 my-lg-0">
+          <li class="navbar-text">
+            {{ account.user == null ? 'Hello' : `Hello ${account.user.username}` }}
+          </li>
+            <li class="nav-item" v-if="account.user != null">
+              <router-link class="nav-link" to="/login">Logout</router-link>
+            </li>
+            <li class="nav-item" v-else-if="account.user == null">
+              <router-link class="nav-link" to="/login">Login</router-link>
+            </li>
         </ul>
       </div>
     </nav>
@@ -37,7 +48,7 @@
     name: 'app',
     computed: {
       ...mapState({
-        alert: (state) => state.alert,
+        account: state => state.account,
       })
     },
     methods: {

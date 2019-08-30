@@ -11,14 +11,12 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,7 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
 public class LoginController {
 
     private static final String authorizationRequestBaseUri = "oauth2/authorize-client";
@@ -41,10 +38,18 @@ public class LoginController {
         this.authorizedClientService = authorizedClientService;
     }
 
-    @PostMapping("/login")
-    public boolean login(@RequestBody User user) {
+    @CrossOrigin
+    @PostMapping(value = "/login")
+    public User login(@RequestBody User user) {
         System.out.println(user);
-        return true;
+        return user;
+    }
+
+    @CrossOrigin
+    @PostMapping("/createRepository")
+    public Repository createRepository(@RequestBody Repository repository) {
+        System.out.println(repository);
+        return repository;
     }
 
 

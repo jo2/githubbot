@@ -12,26 +12,23 @@ import org.springframework.security.oauth2.client.web.HttpSessionOAuth2Authoriza
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors().and().csrf().disable()
                 .antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/css/**", "/img/**", "/js/**", "/login**","/callback/", "/webjars/**", "/error**","/oauth_login", "/loginFailure")
+                .antMatchers("/", "/index", "/createRepository", "/css/**", "/img/**", "/js/**", "/login","/callback/", "/webjars/**", "/error**","/oauth_login", "/loginFailure")
                 .permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
+                .authenticated();
+                /*.and()
                 .oauth2Login()
                 .loginPage("/oauth_login")
                 .authorizationEndpoint()
@@ -42,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessTokenResponseClient(accessTokenResponseClient())
                 .and()
                 .defaultSuccessUrl("/loginSuccess", true)
-                .failureUrl("/loginFailure");
+                .failureUrl("/loginFailure");*/
 
         }
 
