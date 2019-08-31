@@ -9,8 +9,10 @@ public class Repository {
     private String teammateThree;
     private String teammateFour;
     private String description;
+    private boolean created;
 
     public Repository() {
+        this.created = false;
     }
 
     public String getRepoName() {
@@ -69,6 +71,14 @@ public class Repository {
         this.description = description;
     }
 
+    public boolean isCreated() {
+        return created;
+    }
+
+    public void setCreated(boolean created) {
+        this.created = created;
+    }
+
     @Override
     public String toString() {
         return "Repository{" +
@@ -79,6 +89,7 @@ public class Repository {
                 ", teammateThree='" + teammateThree + '\'' +
                 ", teammateFour='" + teammateFour + '\'' +
                 ", description='" + description + '\'' +
+                ", created='" + created + '\'' +
                 '}';
     }
 }

@@ -6,21 +6,18 @@ export const repoService = {
     createRepository
 };
 
-function createRepository(repoName, description, creator, teammateOne, teammateTwo, teammateThree, teammateFour) {
+function createRepository(repository) {
     const requestOptions = {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify({ repoName, description, creator, teammateOne, teammateTwo, teammateThree, teammateFour }),
+        body: JSON.stringify(repository),
     };
-
-    console.log(`createRepo: ${repoName}`);
 
     return fetch(`${config.apiUrl}/createRepository`, requestOptions)
         .then(handleResponse)
-        .then(repository => {
-            console.log(repository);
-            localStorage.setItem('repository', JSON.stringify(repository));
-            return repository;
+        .then(repo => {
+            localStorage.setItem('repository', JSON.stringify(repo));
+            return repo;
         });
 }
 

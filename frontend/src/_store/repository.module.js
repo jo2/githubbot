@@ -1,7 +1,7 @@
 import { repoService } from "../_services";
 
 const repo = JSON.parse(localStorage.getItem('repository'));
-const state = repo == null ? null : repo;
+const state = repo;
 
 const actions = {
     createRepository({ dispatch, commit }, { repoName, description, creator, teammateOne, teammateTwo, teammateThree, teammateFour }) {

@@ -41,6 +41,7 @@ public class LoginController {
     @CrossOrigin
     @PostMapping(value = "/login")
     public User login(@RequestBody User user) {
+        // TODO authenticate @user with GitHub, set @user.token to JwtToken valid for one hour
         System.out.println(user);
         return user;
     }
@@ -48,6 +49,13 @@ public class LoginController {
     @CrossOrigin
     @PostMapping("/createRepository")
     public Repository createRepository(@RequestBody Repository repository) {
+        // TODO create @repository on GitHub:
+        //   check @repository.teammateOne, @repository.teammateTwo, @repository.teammateThree, @repository.teammateFour for valid GitHub account names
+        //   check if repoName is not already in use
+        //   add creator and teammates to GitHub Organisation
+        //   create @repository from template repository
+        //   if @repository is created successfully, set created property of @repository to true
+        //   return @repository
         System.out.println(repository);
         return repository;
     }
